@@ -18,5 +18,16 @@ export default EStyleSheet.create({
     },
     innerImage: {
         width: imageSize / 2
+    },
+    logoText: {
+        fontFamily: "Roboto",
+        "@media android": {
+            fontFamily: "Roboto-Bold",
+        },
+        fontSize: 22,
+        fontWeight: "600",
+        fontStyle: "normal",
+        letterSpacing: 0,
+        color: "$white"
     }
 });

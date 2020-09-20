@@ -9,7 +9,7 @@ const Logo = () => (
         <ImageBackground resizeMode="contain" style={styles.containerImage} source={Images.background}>
             <Image resizeMode="contain" style={styles.innerImage} source={Images.logo} />
         </ImageBackground>
-        <Text>Currency Converter</Text>
+        <Text style={styles.logoText}>Currency Converter</Text>
     </View>
 );
 
