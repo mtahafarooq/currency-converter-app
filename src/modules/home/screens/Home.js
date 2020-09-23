@@ -1,12 +1,17 @@
 import React from 'react';
-import { View, Text, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 
-import { Container } from '../../../components/Container'
-import { Logo } from '../../../components/Logo'
-export default () => {
+import { Header } from '../../../components/others/Header';
+import { Container } from '../../../components/others/Container'
+import { Logo } from '../../../components/others/Logo';
+
+export default ({ navigation }) => {
     return (
         <Container>
             <StatusBar translucent={false} barStyle="light-content" />
+            <Header
+                handlePress={() => navigation.navigate("Options")}
+            />
             <Logo />
         </Container>
     )

@@ -9,6 +9,8 @@ export default EStyleSheet.create({
         // flexDirection: "column",
         alignItems: "center",
         backgroundColor: '$primaryBlue',
-        justifyContent: "center"
+        justifyContent: "center",
+        paddingLeft: '5%',
+        paddingRight: '5%',
     }
 });

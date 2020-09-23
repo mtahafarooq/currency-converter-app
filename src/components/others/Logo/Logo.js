@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Image, Text, ImageBackground } from "react-native";
-import Images from "../../assets/images";
+import Images from "../../../assets/images";
 
 import styles from "./styles";
 
