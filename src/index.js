@@ -6,6 +6,10 @@ import Login from './modules/auth/screens/Login';
 
 import Router from './config/routes';
 
+import { store } from './config/store';
+import { Provider } from 'react-redux';
+
+
 EStyleSheet.build({
     $primaryBlue: "#4F6D7A",
     $orange: '#FF7F50',
@@ -18,5 +22,11 @@ EStyleSheet.build({
     $lightGray: "#F0F0F0",
 });
 
-export default () => <Router />
+export default () => {
+    return (
+        <Provider store={store} >
+            <Router />
+        </Provider>
+    )
+}
 
