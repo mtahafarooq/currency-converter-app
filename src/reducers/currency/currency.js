@@ -1,17 +1,16 @@
 import { GET_CURRENCIES_LIST } from './actions';
 
 const initialState = {
-    currencies: []
+    currencies: [],
 };
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_CURRENCIES_LIST: {
-            const { data } = action.payload;
-
+            const { data, isLoading } = action.payload;
             return {
-                ...state,
-                currencies: data
+                ...action.payload,
+                currencies: data || []
             };
         }
         default:
