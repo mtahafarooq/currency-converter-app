@@ -5,12 +5,13 @@ export default EStyleSheet.create({
         flex: 1
     },
     Container: {
-        flex: 1,
-        // flexDirection: "column",
+        // flex: 1,
+        height: '100%',
         alignItems: "center",
         backgroundColor: '$primaryBlue',
         justifyContent: "center",
         paddingLeft: '5%',
         paddingRight: '5%',
+        width: '100%'
     }
 });

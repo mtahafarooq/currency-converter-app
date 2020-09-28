@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Component } from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, KeyboardAvoidingView, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 
 import { Header } from '../../../components/others/Header';
@@ -13,13 +13,21 @@ import { getCurrenciesList } from '../../../reducers/currency/actions';
 class Home extends Component {
     constructor(props) {
         super(props)
-
+        this.keyboardDidShowListener = Keyboard.addListener(
+            "keyboardDidShow",
+            this.keyboardDidShow
+        );
+        this.keyboardDidHideListener = Keyboard.addListener(
+            'keyboardDidHide',
+            this.keyboardDidHide
+        );
         this.state = {
             baseValue: '',
             quoteValue: '',
             baselabel: 'USD',
             quoteLabel: 'GBP',
-            conversionDate: ''
+            conversionDate: '',
+            isKeyboardOpen: false
         }
     }
 
@@ -68,6 +76,14 @@ class Home extends Component {
 
         }
     }
+    keyboardDidShow = (e) => {
+        this.setState({ isKeyboardOpen: true });
+
+    }
+    keyboardDidHide = () => {
+        this.setState({ isKeyboardOpen: false });
+
+    }
     onBaseInputChnage = (val) => {
         this.setState({ baseValue: val })
     }
@@ -76,41 +92,51 @@ class Home extends Component {
     }
     componentWillUnmount() {
         this._unsubscribe();
+        this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener.remove();
     }
     render() {
         const { baseValue, quoteValue, baselabel, quoteLabel } = this.state;
-        const { navigation, getCurrenciesList } = this.props
+        const { navigation, getCurrenciesList, selectedTheme } = this.props;
 
         return (
-            <Container>
+            <Container theme={selectedTheme} >
                 <StatusBar translucent={false} barStyle="light-content" />
+                <KeyboardAvoidingView
+                    behavior="position"
+                    style={{ flex: 1, justifyContent: 'center' }}
+                    keyboardVerticalOffset={(-6 * 64) / 2.0}
+                >
+                    <Logo
+                        isKeyboardOpen={this.state.isKeyboardOpen} />
+                    <CurrencyInput
+                        onCurrencySelect={() => {
+                            navigation.navigate("CurrencyList", {
+                                title: "Base Currency",
+                                calledFor: 'baseCurrency'
+
+                            })
+                        }}
+                        label={baselabel}
+                        value={baseValue}
+                        onInputChange={this.onBaseInputChnage}
+                    />
+                    <CurrencyInput
+                        onCurrencySelect={() => {
+                            navigation.navigate("CurrencyList", {
+                                title: "Quote Currency",
+                                calledFor: 'quoteCurrency'
+                            })
+                        }}
+                        label={quoteLabel}
+                        value={baseValue ? parseFloat(quoteValue * baseValue).toFixed(2) : ''}
+                        onInputChange={this.onQuoteInputChnage}
+                    />
+                </KeyboardAvoidingView>
                 <Header
                     handlePress={() => navigation.navigate("Options")}
                 />
-                <Logo />
-                <CurrencyInput
-                    onCurrencySelect={() => {
-                        navigation.navigate("CurrencyList", {
-                            title: "Base Currency",
-                            calledFor: 'baseCurrency'
 
-                        })
-                    }}
-                    label={baselabel}
-                    value={baseValue}
-                    onInputChange={this.onBaseInputChnage}
-                />
-                <CurrencyInput
-                    onCurrencySelect={() => {
-                        navigation.navigate("CurrencyList", {
-                            title: "Quote Currency",
-                            calledFor: 'quoteCurrency'
-                        })
-                    }}
-                    label={quoteLabel}
-                    value={baseValue ? parseFloat(quoteValue * baseValue).toFixed(2) : ''}
-                    onInputChange={this.onQuoteInputChnage}
-                />
             </Container>
         )
     }
@@ -118,7 +144,8 @@ class Home extends Component {
 }
 const mapStateToProps = (state) => {
     const props = {
-        currencies: state?.currency
+        currencies: state?.currency,
+        selectedTheme: state.theme.selectedTheme
     }
     return props;
 }

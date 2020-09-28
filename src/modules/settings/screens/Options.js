@@ -1,7 +1,12 @@
 import React from 'react';
-import { StatusBar, ScrollView } from 'react-native';
+import { StatusBar, ScrollView, Linking, Alert } from 'react-native';
 
 import { OptionItem } from '../../../components/others/OptionItem';
+
+const openURL = url =>
+    Linking.openURL(url).catch(() =>
+        Alert.alert("URL Not Found")
+    );
 
 export default ({ navigation }) => {
     return (
@@ -13,7 +18,9 @@ export default ({ navigation }) => {
                 label="Themes"
             />
             <OptionItem
-                pressHandler={() => { }}
+                pressHandler={() => {
+                    openURL('https://fixer.io/')
+                }}
                 icon="ios-link-outline"
                 label="Fixer.io"
             />

@@ -5,7 +5,7 @@ export default EStyleSheet.create({
         flexDirection: 'row',
         height: 50,
         backgroundColor: '$white',
-        width: '90%',
+        width: '100%',
         borderRadius: 5,
         marginVertical: 10
     },

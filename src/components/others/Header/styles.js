@@ -3,7 +3,6 @@ import EStyleSheet from "react-native-extended-stylesheet";
 export default EStyleSheet.create({
     $WHITE: "$white",
     container: {
-        width: '100%',
         alignItems: 'flex-end',
         position: 'absolute',
         '@media ios': {
@@ -11,6 +10,8 @@ export default EStyleSheet.create({
         },
         '@media android': {
             top: 10
-        }
+        },
+        right: '5%',
+        left: '5%'
     }
 });

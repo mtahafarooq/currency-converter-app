@@ -1,34 +1,61 @@
-import React from 'react';
-import { StatusBar, ScrollView } from 'react-native';
-import styles from './styles/styles'
+import React, { Component } from 'react';
+import { View, StatusBar, ScrollView, FlatList } from 'react-native';
+import { connect } from 'react-redux';
 
 import { ThemeItem } from '../../../components/others/ThemeItem';
+import { setTheme } from '../../../reducers/theme/actions';
 
-export default () => {
-    return (
-        <ScrollView>
-            <StatusBar />
+class Themes extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            selectedTheme: {}
+        }
+    }
+    componentDidMount() {
+        this.setState({ selectedTheme: this.props.selectedTheme })
+    }
+
+    handleSelection = (selectedTheme) => {
+        this.props.setTheme(selectedTheme)
+        this.setState({ selectedTheme: selectedTheme })
+    }
+    renderItem({ item }) {
+        const calledFor = this.props.route.params?.calledFor
+        return (
             <ThemeItem
-                pressHandler={() => { }}
-                color={styles.$blueColor}
-                label="Orange"
+                pressHandler={this.handleSelection}
+                color={item.code}
+                label={item.name}
+                checked={this.state.selectedTheme.code == item.code}
             />
-            <ThemeItem
-                pressHandler={() => { }}
-                color={styles.$orangeColor}
-                label="Orange"
-            />
-            <ThemeItem
-                pressHandler={() => { }}
-                color={styles.$greenColor}
-                label="Green"
-            />
-            <ThemeItem
-                pressHandler={() => { }}
-                color={styles.$purpleColor}
-                label="Purple"
-            />
-        </ScrollView>
-    )
+        );
+    }
+    render() {
+        return (
+            <View>
+                <StatusBar translucent={false} barStyle="default" />
+                <FlatList
+                    data={this.props.themes}
+                    renderItem={this.renderItem.bind(this)}
+                    keyExtractor={(item, index) => index.toString()}
+                />
+            </View>
+        )
+    }
 
 }
+
+const mapStateToProps = (state) => {
+    const props = {
+        selectedTheme: state.theme.selectedTheme,
+        themes: state.theme.themes
+    }
+    return props;
+}
+export default connect(
+    mapStateToProps,
+    {
+        setTheme
+    }
+)(Themes);

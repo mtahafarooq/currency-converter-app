@@ -16,11 +16,15 @@ class Container extends Component {
         backgroundColor: PropTypes.string
     };
     containerView() {
-        const { children } = this.props;
+        const { children, theme } = this.props;
+        const conatinerStyle = [styles.Container]
+        if (theme != null || theme != undefined) {
+            conatinerStyle.push({ backgroundColor: theme.code })
+        }
         return (
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-                <View style={styles.Container}>{children}</View>
-            </TouchableWithoutFeedback>
+                <View style={conatinerStyle}>{children}</View>
+            </TouchableWithoutFeedback >
         );
     }
     render() {

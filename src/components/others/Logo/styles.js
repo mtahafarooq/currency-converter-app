@@ -4,8 +4,12 @@ import EStyleSheet from "react-native-extended-stylesheet";
 const { width } = Dimensions.get('window');
 
 const imageSize = width / 2;
-
+const imageResize = width / 2.5
 export default EStyleSheet.create({
+
+});
+
+export const styles = (isKeyboardOpen = false) => EStyleSheet.create({
     container: {
         alignItems: 'center',
 
@@ -13,11 +17,11 @@ export default EStyleSheet.create({
     containerImage: {
         alignItems: 'center',
         justifyContent: 'center',
-        height: imageSize,
-        width: imageSize
+        height: isKeyboardOpen ? imageResize : imageSize,
+        width: isKeyboardOpen ? imageResize : imageSize
     },
     innerImage: {
-        width: imageSize / 2
+        width: isKeyboardOpen ? imageResize / 2 : imageSize / 2
     },
     logoText: {
         fontFamily: "Roboto",
@@ -30,4 +34,4 @@ export default EStyleSheet.create({
         letterSpacing: 0,
         color: "$white"
     }
-});
+})
