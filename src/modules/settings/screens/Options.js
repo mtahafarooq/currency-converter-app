@@ -11,7 +11,7 @@ const openURL = url =>
 export default ({ navigation }) => {
     return (
         <ScrollView>
-            <StatusBar />
+            <StatusBar translucent={false} barStyle="default" />
             <OptionItem
                 pressHandler={() => { navigation.navigate('Themes') }}
                 icon="ios-chevron-forward-outline"
@@ -25,7 +25,7 @@ export default ({ navigation }) => {
                 label="Fixer.io"
             />
             <OptionItem
-                pressHandler={() => { }}
+                pressHandler={() => { navigation.navigate('Login') }}
                 icon="ios-return-up-back-outline"
                 label="Logout"
             />

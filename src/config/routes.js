@@ -14,9 +14,9 @@ const Stack = createStackNavigator();
 export default () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Home">
+            <Stack.Navigator initialRouteName="Login">
                 <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-                <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
                 <Stack.Screen name="Options" component={Options} />
                 <Stack.Screen name="Themes" component={Themes} />
                 <Stack.Screen
