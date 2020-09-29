@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, StatusBar, ScrollView, FlatList } from 'react-native';
 import { connect } from 'react-redux';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { ThemeItem } from '../../../components/others/ThemeItem';
 import { setTheme } from '../../../reducers/theme/actions';
@@ -13,10 +14,23 @@ class Themes extends Component {
         }
     }
     componentDidMount() {
-        this.setState({ selectedTheme: this.props.selectedTheme })
+        this.setState({ selectedTheme: this.props?.selectedTheme })
     }
 
-    handleSelection = (selectedTheme) => {
+    handleSelection = async (selectedTheme) => {
+
+        try {
+            const userDetails = await AsyncStorage.getItem('user')
+            var userObj = JSON.parse(userDetails)
+        } catch (e) {
+            // read error
+        }
+        userObj.theme = selectedTheme
+        try {
+            await AsyncStorage.setItem('user', JSON.stringify(userObj))
+        } catch (e) {
+            // save error
+        }
         this.props.setTheme(selectedTheme)
         this.setState({ selectedTheme: selectedTheme })
     }
@@ -51,6 +65,7 @@ const mapStateToProps = (state) => {
         selectedTheme: state.theme.selectedTheme,
         themes: state.theme.themes
     }
+    console.log("PPP", props)
     return props;
 }
 export default connect(

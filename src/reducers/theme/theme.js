@@ -7,6 +7,7 @@ const THEMES = [
     { name: 'Purple', code: '#BB8FCE' }
 ]
 const initialState = {
+    defaultTheme: THEMES[0],
     selectedTheme: THEMES[0],
     themes: THEMES
 };

@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from '../styles/styles';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { connect } from 'react-redux';
 
@@ -18,6 +19,7 @@ import { Container } from '../../../components/others/Container';
 import { Logo } from '../../../components/others/Logo';
 
 import { getCurrenciesList } from '../../../reducers/currency/actions';
+import { setTheme } from '../../../reducers/theme/actions';
 
 class Login extends Component {
     constructor(props) {
@@ -37,9 +39,29 @@ class Login extends Component {
             isKeyboardOpen: false
         }
     }
+    async checkLoggedInState() {
+        try {
+            const userDetails = await AsyncStorage.getItem('user')
+            const userObj = JSON.parse(userDetails)
+            if (userObj) {
+                return userObj
+            }
+        } catch (e) {
+        }
+    }
 
     componentDidMount() {
-        this._unsubscribe = this.props.navigation.addListener('focus', () => {
+        const { navigation } = this.props;
+
+        this._unsubscribe = this.props.navigation.addListener('focus', async () => {
+            const user = await this.checkLoggedInState()
+            if (user) {
+                const { theme } = user
+                this.props.setTheme(theme)
+                navigation.navigate('Home')
+            }
+        });
+        this._unsubscribe = navigation.addListener('focus', () => {
             this.setState({ username: '', password: '' })
         });
         this.props.getCurrenciesList()
@@ -60,20 +82,39 @@ class Login extends Component {
         this.keyboardDidShowListener.remove();
         this.keyboardDidHideListener.remove();
     }
+    async addUser() {
+        const { username, password } = this.state;
+        const { selectedTheme } = this.props
+
+        const user = {
+            username: username,
+            password: password,
+            theme: selectedTheme,
+            favouriteCurrencies: []
+        }
+        try {
+            await AsyncStorage.setItem('user', JSON.stringify(user))
+        } catch (e) {
+        }
+
+    }
     handleLogin = () => {
-        if (this.state.username.length > 0 && this.state.password.length > 0) {
+        const { username, password } = this.state;
+        if (username.length > 0 && password.length > 0) {
             this.setState({ requested: true })
             setTimeout(() => {
                 this.setState({ requested: false })
+                this.addUser()
                 this.props.navigation.navigate('Home')
 
-            }, 5000)
+            }, 500)
         }
         else {
             Alert.alert("Username or Password can not be empty")
         }
 
     }
+
     render() {
         const { username, password, requested } = this.state;
         const { getCurrenciesList, selectedTheme } = this.props;
@@ -122,5 +163,8 @@ const mapStateToProps = (state) => {
 }
 export default connect(
     mapStateToProps,
-    { getCurrenciesList }
+    {
+        getCurrenciesList,
+        setTheme
+    }
 )(Login);

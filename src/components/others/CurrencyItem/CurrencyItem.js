@@ -9,18 +9,20 @@ import { CardPanel } from '../../common/CardPanel';
 import { Label } from '../../common/Label';
 import Images from "../../../assets/images";
 
-const CurrencyItem = ({ label, pressHandler }) => {
+const CurrencyItem = ({ label, pressHandler, isFavourite, handleFavourite }) => {
     return (
         <CardPanel pressHandler={pressHandler}>
             <Label label={label} />
-            <TouchableOpacity onPress={() => alert(1)}>
-                <Image resizeMode="contain" source={Images.emptyHeart} />
+            <TouchableOpacity onPress={() => handleFavourite(label)}>
+                <Image resizeMode="contain" source={isFavourite ? Images.filledHeart : Images.emptyHeart} />
             </TouchableOpacity>
         </CardPanel>
     );
 };
 CurrencyItem.propTypes = {
     label: PropTypes.string,
-    pressHandler: PropTypes.func
+    pressHandler: PropTypes.func,
+    isFavourite: PropTypes.bool,
+    handleFavourite: PropTypes.func
 };
 export default CurrencyItem;
