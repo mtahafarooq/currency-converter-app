@@ -13,7 +13,7 @@ const CheckMark = ({ color, checked }) => {
         conatinerStyle.push({ backgroundColor: color })
     }
     return (
-        <View style={conatinerStyle}>
+        <View testID={'circle'} style={conatinerStyle}>
             {checked ? <Icon name={"checkmark-outline"} size={20} color={styles.$WHITE} /> : null}
         </View >
     );

@@ -120,6 +120,7 @@ class Home extends Component {
                         label={baselabel}
                         value={baseValue}
                         onInputChange={this.onBaseInputChnage}
+                        selectedTheme={selectedTheme}
                     />
                     <CurrencyInput
                         onCurrencySelect={() => {
@@ -131,6 +132,7 @@ class Home extends Component {
                         label={quoteLabel}
                         value={baseValue ? parseFloat(quoteValue * baseValue).toFixed(2) : ''}
                         onInputChange={this.onQuoteInputChnage}
+                        selectedTheme={selectedTheme}
                     />
                 </KeyboardAvoidingView>
                 <Header

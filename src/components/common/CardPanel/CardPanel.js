@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 const CardPanel = ({ pressHandler, children }) => {
     return (
-        <TouchableOpacity style={styles.container} onPress={() => { pressHandler() }}>
+        <TouchableOpacity testID={'submit'} style={styles.container} onPress={() => { pressHandler() }}>
             {children}
         </TouchableOpacity >
     );
