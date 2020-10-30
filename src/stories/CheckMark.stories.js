@@ -6,11 +6,11 @@ import { CheckMark } from '../components/common/CheckMark';
 storiesOf("CheckMark", module)
     .add("default", () => (
         <CheckMark
-            color={"#4F6D7A"}
+            color={"#BEE9D3"}
             checked={false} />
     ))
     .add("checked", () => (
         <CheckMark
-            color={"#4F6D7A"}
+            color={"#BEE9D3"}
             checked={true} />
     ))
