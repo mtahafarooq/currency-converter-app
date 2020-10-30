@@ -19,7 +19,9 @@ EStyleSheet.build({
     $black: "#000000",
     $border: "#E2E2E2",
     $inputText: "#797979",
-    $lightGray: "#F0F0F0",
+    $lightGray: "#F1F1F1",
+    $Maroon:  "#800000",
+    Yellow: "#FFFF00"
 });
 
 export default () => {
